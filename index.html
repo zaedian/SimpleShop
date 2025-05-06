@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakery Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            width: 150px;
+            border-radius: 8px;
+        }
+
+        .item button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .item button:hover {
+            background-color: #45a049;
+        }
+
+        .cart {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .cart li {
+            padding: 5px 0;
+        }
+
+        #totalPrice {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Bakery!</h1>
+
+        <div class="menu">
+            <h2>Bakery Menu</h2>
+            <div class="item" data-price="3.5">
+                <span>Bread - $3.50</span>
+                <button onclick="addToCart('Bread', 3.5)">Add to Cart</button>
+            </div>
+            <div class="item" data-price="2.0">
+                <span>Croissant - $2.00</span>
+                <button onclick="addToCart('Croissant', 2.0)">Add to Cart</button>
+            </div>
+            <div class="item" data-price="1.5">
+                <span>Cookie - $1.50</span>
+                <button onclick="addToCart('Cookie', 1.5)">Add to Cart</button>
+            </div>
+            <div class="item" data-price="4.0">
+                <span>Bagel - $4.00</span>
+                <button onclick="addToCart('Bagel', 4.0)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="cart">
+            <h2>Your Shopping Cart</h2>
+            <ul id="cartList"></ul>
+            <p id="totalPrice">Total: $0.00</p>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(item, price) {
+            cart.push({ item, price });
+            total += price;
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartList = document.getElementById("cartList");
+            const totalPrice = document.getElementById("totalPrice");
+
+            // Clear the current cart list
+            cartList.innerHTML = '';
+
+            // Add each item in the cart to the list
+            cart.forEach(entry => {
+                const li = document.createElement("li");
+                li.textContent = `${entry.item} - $${entry.price.toFixed(2)}`;
+                cartList.appendChild(li);
+            });
+
+            // Update total price
+            totalPrice.textContent = `Total: $${total.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
