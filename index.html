@@ -194,35 +194,39 @@
             updateCart(item, quantity);
         }
 
-// Function to handle updating the cart automatically based on quantity changes
-function updateCart(item, quantity) {
-    const priceMap = {
-        'bread': 3.5,
-        'croissant': 2.0,
-        'cookie': 1.5,
-        'bagel': 4.0
-    };
+		// Function to handle updating the cart automatically based on quantity changes
+		function updateCart(item, quantity) {
+			const priceMap = {
+				'bread': 3.5,
+				'croissant': 2.0,
+				'cookie': 1.5,
+				'bagel': 4.0
+			};
 
-    let itemInCart = cart.find(entry => entry.item === item);
-    if (itemInCart) {
-        itemInCart.quantity = quantity; // Update quantity if the item is already in the cart
-    } else if (quantity > 0) {
-        cart.push({ item, price: priceMap[item], quantity });
-    } else {
-        cart = cart.filter(entry => entry.item !== item); // Remove item if quantity is 0
-    }
+			let itemInCart = cart.find(entry => entry.item === item);
+			if (itemInCart) {
+				itemInCart.quantity = quantity; // Update quantity if the item is already in the cart
+			} else if (quantity > 0) {
+				cart.push({ item, price: priceMap[item], quantity }); // Add item if quantity is more than 0
+			}
 
-    // Recalculate total price
-    total = cart.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
+			// Remove item from the cart if quantity is 0
+			if (quantity === 0) {
+				cart = cart.filter(entry => entry.item !== item); // Completely remove item from the cart if quantity is 0
+			}
 
-    // Update cart display
-    updateCartDisplay();
+			// Recalculate total price
+			total = cart.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
 
-    // Hide error message when items are added to the cart
-    if (cart.length > 0) {
-        document.getElementById('errorMessage').style.display = 'none';
-    }
-}
+			// Update cart display
+			updateCartDisplay();
+
+			// Hide error message when items are added to the cart
+			if (cart.length > 0) {
+				document.getElementById('errorMessage').style.display = 'none';
+			}
+		}
+
 
         // Function to update the cart display and total price
         function updateCartDisplay() {
